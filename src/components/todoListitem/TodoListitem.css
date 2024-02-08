@@ -1,0 +1,8 @@
+.imp {
+  color: rgb(122, 8, 8);
+  font-weight: bold;
+}
+
+.done {
+  text-decoration: line-through;
+}
