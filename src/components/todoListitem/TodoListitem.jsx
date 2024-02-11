@@ -32,6 +32,10 @@ export default class TodoListitem extends Component {
           >
             <i className="bi bi-exclamation-circle"></i>
           </button>
+          <button
+          className="btn btn-outline-primary"
+          ><i className="bi bi-pencil-square"></i>
+          </button>
         </span>
       </>
     );

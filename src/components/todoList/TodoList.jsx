@@ -1,12 +1,17 @@
 import React from "react";
 import TodoListitem from "../todoListitem/TodoListitem";
+import "./TodoList.css";
 
 const TodoList = (props) => {
   const todoData = props.todoData;
   const delBtn = props.deleteBtn;
   const btnImp = props.btnImp;
   const spanBtn = props.spanBtn;
+  const filteredTodos = props.filteredTodos
   // console.log(props.todoData);
+  if (props.todoData.length == 0) {
+    return <p>No Data . . . </p>;
+  }
 
   const elementter = props.todoData.map((el) => {
     return (

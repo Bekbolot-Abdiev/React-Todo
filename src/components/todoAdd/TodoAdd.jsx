@@ -35,6 +35,14 @@ export default class TodoAdd extends Component {
             </button>
           </div>
         </div>
+
+        {/* Update Task */}
+
+        {/* <div className="d-flex">
+          <input type="text" className="form-control" />
+          <button className="btn btn-success">cancel</button>
+          <button className="btn btn-info">save</button>
+        </div> */}
       </>
     );
   }

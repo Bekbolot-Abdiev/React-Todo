@@ -11,46 +11,60 @@ const App = () => {
     { id: 3, title: "Learn Redux", important: false, done: false },
   ]);
 
+  const [filter, setFilter] = useState("all");
+  const [searchTodo, setSearchTodo] = useState("");
+  const [editingTodoid, setEditingTodoid] = useState(null)
+  const [editedText, setEditedText] = useState('')
+
+
+  
+  const onSetFilter = (status) => {
+    setFilter(status);
+  };
+
+  const handleSearchInput = (text) => {
+    setSearchTodo(text);
+  };
+  //
+
+
+  const todoFilter = (array, status) => {
+    switch (status) {
+      case "all":
+        return array;
+      case "active":
+        return array.filter((el) => !el.done);
+      case "done":
+        return array.filter((el) => el.done);
+      default:
+        return array;
+    }
+  };
+
   const delteBtn = (id) => {
     let delBtn = todoData.filter((el) => el.id !== id);
     setTodo(delBtn);
   };
 
   const btnImp = (id) => {
-    // let impTodo = todoData.map((el) => el.id);
-    // console.log(id);
     const index = todoData.findIndex((el) => el.id === id);
-    console.log(index, "index");
     const todo = todoData[index];
-    console.log(todo);
     const updTodo = { ...todo, important: !todo.important };
-    console.log(updTodo, "upTodo");
     const before = todoData.slice(0, index);
-    console.log(before, "before");
     const after = todoData.slice(index + 1);
-    console.log(after, "after");
     setTodo([...before, updTodo, ...after]);
   };
 
-
   const spanBtn = (id) => {
-    console.log(id);
     const index = todoData.findIndex((el) => el.id === id);
-    console.log(index, "index");
     const todo = todoData[index];
-    console.log(todo);
     const updTodo = { ...todo, done: !todo.done };
-    console.log(updTodo, "upTodo");
     const before = todoData.slice(0, index);
-    console.log(before, "before");
     const after = todoData.slice(index + 1);
-    console.log(after, "after");
     setTodo([...before, updTodo, ...after]);
-  }
-
+  };
 
   const addNewTodo = (text) => {
-    console.log(text);
     const ids = todoData.map((el) => el.id);
     console.log(ids.at(-1) + 1);
     const newTodo = {
@@ -63,12 +77,33 @@ const App = () => {
     setTodo([...todoData, newTodo]);
   };
 
+  const doneTodo = todoData.filter((el) => el.done).length;
+  const allTodo = todoData.length - doneTodo;
+  //
+  const filterData = todoData.filter((el) =>
+    el.title.toLowerCase().includes(searchTodo.toLowerCase())
+  );
+
+  const newData = todoFilter(filterData, filter);
+
   return (
     <>
       <div style={{ width: 600 }} className="mx-auto">
-        <TodoHeader />
-        <TodoSearch />
-        <TodoList todoData={todoData} deleteBtn={delteBtn} btnImp={btnImp} spanBtn={spanBtn} />
+        <TodoHeader
+         doneTodo={doneTodo}
+         allTodo={allTodo} 
+         />
+        <TodoSearch
+          filter={filter}
+          onSetFilter={onSetFilter}
+          handleSearchInput={handleSearchInput}
+        />
+        <TodoList
+          todoData={newData}
+          deleteBtn={delteBtn}
+          btnImp={btnImp}
+          spanBtn={spanBtn}
+        />
         <TodoAdd onAddTodo={addNewTodo} />
       </div>
     </>
